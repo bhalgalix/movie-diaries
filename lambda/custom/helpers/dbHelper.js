@@ -1,6 +1,7 @@
 var AWS = require("aws-sdk");
 AWS.config.update({region: "us-east-1"});
-const tableName = "dynamodb-starter";
+const tableName = "movie-table";
+const tableName2 = "genre-table";
 
 var dbHelper = function () { };
 var docClient = new AWS.DynamoDB.DocumentClient();
@@ -67,6 +68,30 @@ dbHelper.prototype.removeMovie = (movie, userID) => {
             console.log(JSON.stringify(err));
             console.log("DeleteItem succeeded:", JSON.stringify(data, null, 2));
             resolve()
+        })
+    });
+}
+
+dbHelper.prototype.suggestMovie = (genre) => {
+    return new Promise((resolve, reject) => {
+        const params = {
+            TableName: tableName2,
+            KeyConditionExpression: "#genre = :genre",
+            ExpressionAttributeNames: {
+                "#genre": "genre"
+            },
+            ExpressionAttributeValues: {
+                ":genre": genre
+            },
+            ConditionExpression: "attribute_exists(genre)"
+        }
+        docClient.query(params, (err, data) => {
+            if (err) {
+                console.error("Unable to read item. Error JSON:", JSON.stringify(err, null, 2));
+                return reject(JSON.stringify(err, null, 2))
+            } 
+            console.log("GetItem succeeded:", JSON.stringify(data, null, 2));
+            resolve(data.Items)
         })
     });
 }

@@ -4,7 +4,8 @@
 const Alexa = require('ask-sdk');
 const dbHelper = require('./helpers/dbHelper');
 const GENERAL_REPROMPT = "What would you like to do?";
-const dynamoDBTableName = "dynamodb-starter";
+const dynamoDBTableName = "movie-table";
+const dynamoDBTableName2 = "genre-table";
 const LaunchRequestHandler = {
   canHandle(handlerInput) {
     return handlerInput.requestEnvelope.request.type === 'LaunchRequest';
@@ -166,6 +167,38 @@ const CancelAndStopIntentHandler = {
   },
 };
 
+const SuggestMovieIntentHandler = {
+  canHandle(handlerInput) {
+    return handlerInput.requestEnvelope.request.type === 'IntentRequest'
+      && handlerInput.requestEnvelope.request.intent.name === 'SuggestMovieIntent';
+  },
+  async handle(handlerInput) {
+    const {responseBuilder } = handlerInput;
+    const slots = handlerInput.requestEnvelope.request.intent.slots;
+    const Genre = slots.Genre.value;
+    return dbHelper.suggestMovie(Genre)
+      .then((data) => {
+        var speechText = "Your movie suggestion is "
+        if (data.length == 0) {
+          speechText = "We don't have any movie of this genre."
+        } else {
+          speechText += data.map(e => e.movieTitle).join(", ")
+        }
+        return responseBuilder
+          .speak(speechText)
+          .reprompt(GENERAL_REPROMPT)
+          .getResponse();
+      })
+      .catch((err) => {
+        const speechText = "we cannot get you a movie right now. Try again!"
+        return responseBuilder
+          .speak(speechText)
+          .getResponse();
+      })
+  }  
+}
+
+
 const SessionEndedRequestHandler = {
   canHandle(handlerInput) {
     return handlerInput.requestEnvelope.request.type === 'SessionEndedRequest';
@@ -201,11 +234,12 @@ exports.handler = skillBuilder
     GetMoviesIntentHandler,
     InProgressRemoveMovieIntentHandler,
     RemoveMovieIntentHandler,
+    SuggestMovieIntentHandler,
     HelpIntentHandler,
     CancelAndStopIntentHandler,
     SessionEndedRequestHandler
   )
   .addErrorHandlers(ErrorHandler)
-  .withTableName(dynamoDBTableName)
+  .withTableName(dynamoDBTableName, dynamoDBTableName2)
   .withAutoCreateTable(true)
   .lambda();

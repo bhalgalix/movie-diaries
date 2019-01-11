@@ -1,20 +1,44 @@
 {
   "deploy_settings": {
     "default": {
-      "skill_id": "",
+      "skill_id": "amzn1.ask.skill.6ede7c27-a756-425e-b6b2-c273834cb8bf",
       "was_cloned": false,
       "merge": {
         "manifest": {
           "apis": {
             "custom": {
               "endpoint": {
-                "uri": "ask-custom-dynamodb-starter-default"
+                "uri": "arn:aws:lambda:us-east-1:670578545467:function:ask-custom-left_or_right-default"
               }
             }
           }
         }
       },
-      "in_skill_products": []
+      "in_skill_products": [],
+      "resources": {
+        "manifest": {
+          "eTag": "d138abde7e87135912905b2615f2d20a"
+        },
+        "interactionModel": {
+          "en-US": {
+            "eTag": "ef3d4ee7c1b85217eded967dd8ffabfb"
+          }
+        },
+        "lambda": [
+          {
+            "alexaUsage": [
+              "custom/default"
+            ],
+            "arn": "arn:aws:lambda:us-east-1:670578545467:function:ask-custom-left_or_right-default",
+            "awsRegion": "us-east-1",
+            "codeUri": "lambda/custom",
+            "functionName": "ask-custom-left_or_right-default",
+            "handler": "index.handler",
+            "revisionId": "714f7216-351d-40a6-afb7-2704118e13df",
+            "runtime": "nodejs8.10"
+          }
+        ]
+      }
     }
   }
 }

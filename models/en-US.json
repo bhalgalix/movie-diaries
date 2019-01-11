@@ -53,6 +53,21 @@
                         "remove {MovieName}",
                         "remove"
                     ]
+                },
+                {
+                    "name": "SuggestMovieIntent",
+                    "slots": [
+                        {
+                            "name": "Genre",
+                            "type": "AMAZON.Genre",
+                            "samples": [
+                                "{Genre}"
+                            ]
+                        }
+                    ],
+                    "samples": [
+                        "suggest me a movie of {Genre}"
+                    ]
                 }
             ],
             "types": []
