@@ -8,7 +8,7 @@ It uses a template that shows use of DynamoDB with Alexa. This template uses the
 
 ## Instructions to execute this template 
 - Provide DynamoDB execution permission to the Lambda.
-- Create a DynamoDB table with name dynamodb-starter and schema, userId as a Partition Key and movieTitle as a sort key. 
+- Create a DynamoDB table with name dynamodb-starter and schema, user Id as a Partition Key and movieTitle as a sort key. 
 
 ```
 {
