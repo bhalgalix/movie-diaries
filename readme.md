@@ -34,3 +34,4 @@ It uses a template that shows use of DynamoDB with Alexa. This template uses the
     ]
 }
 ```
+You can also go to <a href="https://skilltemplates.com/" target="_blank">skilltemplates.com</a> to get working templates with tutorials.
