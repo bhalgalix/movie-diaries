@@ -10,28 +10,5 @@ It uses a template that shows use of DynamoDB with Alexa. This template uses the
 - Provide DynamoDB execution permission to the Lambda.
 - Create a DynamoDB table with name dynamodb-starter and schema, user Id as a Partition Key and movieTitle as a sort key. 
 
-```
-{
-    AttributeDefinitions: [
-        {
-            AttributeName: 'userId',
-            AttributeType: 'S'
-        },
-        {
-            AttributeName: 'movieTitle',
-            AttributeType: 'S'
-        }
-    ],
-    KeySchema: [
-        {
-            AttributeName: 'userId',
-            KeyType: 'HASH'
-        },
-        {
-            AttributeName: 'movieTitle',
-            KeyType: 'RANGE'
-        }
-    ]
-}
-```
+
 You can also go to <a href="https://skilltemplates.com/" target="_blank">skilltemplates.com</a> to get working templates with tutorials.
